@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Password Protected Page</title>
+    <style>
+        body {
+            display:flex;
+            font-family: "Montserrat", sans-serif;
+            color: #222;
+            font-weight: 600;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            margin:0;
+            background: #f5f5f5;
+        }
+        .login-container {
+            text-align:center;
+            background: #fff;
+            padding: 24px;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            border-radius:16px;
+        }
+
+        input {
+            padding:10px;
+            margin:5px;
+            font-size:16px;
+            border-radius: 8px;
+            border: 1px solid #DEE2E6;
+            width: calc(100% - 40px);
+        }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        width: calc(100% - 40px);
+        margin-top: 16px;
+    }
+
+    .login-btn{
+        background-color:#000;
+        color:#fff;
+    }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Enter Username and Password</h2>
+        <input type="text" id="username" placeholder="username"/><br/>
+        <input type="password" id="password" placeholder="password"/><br/>
+        <button id="login-btn" onclick="checkCredentials()">View Project</button>
+        <div id="error-message" style="color:red;"></div>
+        <button id="back-btn" onclick="goBack()">Go Back</button>
+    </div>
+
+    <script>
+
+        function getRedirectUrl() {
+            const queryString = window.location.search;
+            const params = queryString.split('?')[1];
+
+            if (params) {
+                const paramPairs = params.split('&');
+                for (let i = 0; i < paramPairs.length; i++) {
+                    const [key, value] = paramPairs[i].split('=');
+                    if (key === 'redirect') {
+                        return decodeURIComponent(value);
+                    }
+                }
+            }
+        }
+
+        function checkCredentials() {
+            var enteredUsername = document.getElementById('username').value;
+            var enteredPassword = document.getElementById('password').value;
+
+            console.log("Entered Username:", enteredUsername);
+            console.log("Entered Password:", enteredPassword);
+
+            var correctUsername = "Mischka_Wolmarans";
+            var correctPassword = "YahwehisKing";
+
+            if (enteredUsername === correctUsername && enteredPassword === correctPassword) {
+                console.log("Login Successful!")
+                sessionStorage.setItem('authenticated', true);
+                window.location.href = getRedirectUrl();
+            } else {
+                document.getElementById('error-message').innerText = "Invalid Username or Password";
+                console.log("Login failed! Invalid credentials.")
+            } 
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+       /* if (sessionStorage.getItem('authenticated')) {
+            window.location.href = getRedirectUrl();
+        }*/
+    </script>
+</body>
+</html>
