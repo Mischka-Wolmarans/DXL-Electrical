@@ -1,250 +1,427 @@
-(function() {
-  "use strict";
+/**
+ * =====================================================
+ * DXL Electrical
+ * Main JavaScript
+ * =====================================================
+ */
 
-  /**
-   * Easy selector helper function
-   */
-  const select = (el, all = false) => {
-    el = el.trim()
-    if (all) {
-      return [...document.querySelectorAll(el)]
-    } else {
-      return document.querySelector(el)
-    }
-  }
+document.addEventListener("DOMContentLoaded", () => {
 
-  /**
-   * Easy event listener function
-   */
-  const on = (type, el, listener, all = false) => {
-    let selectEl = select(el, all)
-    if (selectEl) {
-      if (all) {
-        selectEl.forEach(e => e.addEventListener(type, listener))
-      } else {
-        selectEl.addEventListener(type, listener)
-      }
-    }
-  }
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
 
-  /**
-   * Easy on scroll event listener 
-   */
-  const onscroll = (el, listener) => {
-    el.addEventListener('scroll', listener)
-  }
+    const body = document.body;
+    const navToggle = document.querySelector(".mobile-nav-toggle");
+    const navLinks = document.querySelectorAll("#navbar .scrollto");
+    const year = document.getElementById("year");
 
-  /**
-   * Navbar links active state on scroll
-   */
-  let navbarlinks = select('#navbar .scrollto', true)
-  const navbarlinksActive = () => {
-    let position = window.scrollY + 200
-    navbarlinks.forEach(navbarlink => {
-      if (!navbarlink.hash) return
-      let section = select(navbarlink.hash)
-      if (!section) return
-      if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
-        navbarlink.classList.add('active')
-      } else {
-        navbarlink.classList.remove('active')
-      }
-    })
-  }
-  window.addEventListener('load', navbarlinksActive)
-  onscroll(document, navbarlinksActive)
 
-  /**
-   * Scrolls to an element with header offset
-   */
-  const scrollto = (el) => {
-    let elementPos = select(el).offsetTop
-    window.scrollTo({
-      top: elementPos,
-      behavior: 'smooth'
-    })
-  }
+    /* =====================================================
+   MOBILE NAVIGATION
+===================================================== */
 
-  /**
-   * Back to top button
-   */
-  let backtotop = select('.back-to-top')
-  if (backtotop) {
-    const toggleBacktotop = () => {
-      if (window.scrollY > 100) {
-        backtotop.classList.add('active')
-      } else {
-        backtotop.classList.remove('active')
-      }
-    }
-    window.addEventListener('load', toggleBacktotop)
-    onscroll(document, toggleBacktotop)
-  }
+if (navToggle) {
 
-  /**
-   * Mobile nav toggle
-   */
-  on('click', '.mobile-nav-toggle', function(e) {
-    select('body').classList.toggle('mobile-nav-active')
-    this.classList.toggle('bi-list')
-    this.classList.toggle('bi-x')
-  })
+    navToggle.addEventListener("click", () => {
 
-  /**
-   * Scrool with ofset on links with a class name .scrollto
-   */
-  on('click', '.scrollto', function(e) {
-    if (select(this.hash)) {
-      e.preventDefault()
+        body.classList.toggle("mobile-nav-active");
 
-      let body = select('body')
-      if (body.classList.contains('mobile-nav-active')) {
-        body.classList.remove('mobile-nav-active')
-        let navbarToggle = select('.mobile-nav-toggle')
-        navbarToggle.classList.toggle('bi-list')
-        navbarToggle.classList.toggle('bi-x')
-      }
-      scrollto(this.hash)
-    }
-  }, true)
+        const expanded = body.classList.contains("mobile-nav-active");
 
-  /**
-   * Scroll with ofset on page load with hash links in the url
-   */
-  window.addEventListener('load', () => {
-    if (window.location.hash) {
-      if (select(window.location.hash)) {
-        scrollto(window.location.hash)
-      }
-    }
-  });
+        navToggle.setAttribute("aria-expanded", expanded);
 
-  /**
-   * Hero type effect
-   */
-  const typed = select('.typed')
-  if (typed) {
-    let typed_strings = typed.getAttribute('data-typed-items')
-    typed_strings = typed_strings.split(',')
-    new Typed('.typed', {
-      strings: typed_strings,
-      loop: true,
-      typeSpeed: 100,
-      backSpeed: 50,
-      backDelay: 2000
+        navToggle.classList.toggle("bi-list");
+        navToggle.classList.toggle("bi-x");
+
     });
-  }
 
-  /**
-   * Skills animation
-   */
-  let skilsContent = select('.skills-content');
-  if (skilsContent) {
-    new Waypoint({
-      element: skilsContent,
-      offset: '80%',
-      handler: function(direction) {
-        let progress = select('.progress .progress-bar', true);
-        progress.forEach((el) => {
-          el.style.width = el.getAttribute('aria-valuenow') + '%'
+}
+
+
+    /* =====================================================
+       CLOSE MOBILE MENU AFTER CLICK
+    ===================================================== */
+
+    navLinks.forEach(link => {
+
+        link.addEventListener("click", () => {
+
+            if (!body.classList.contains("mobile-nav-active"))
+                return;
+
+            body.classList.remove("mobile-nav-active");
+
+            navToggle.setAttribute("aria-expanded", "false");
+
+            navToggle.classList.remove("bi-x");
+            navToggle.classList.add("bi-list");
+
         });
-      }
-    })
-  }
 
-  /**
-   * Porfolio isotope and filter
-   */
-  window.addEventListener('load', () => {
-    let portfolioContainer = select('.portfolio-container');
-    if (portfolioContainer) {
-      let portfolioIsotope = new Isotope(portfolioContainer, {
-        itemSelector: '.portfolio-item'
-      });
+    });
 
-      let portfolioFilters = select('#portfolio-flters li', true);
 
-      on('click', '#portfolio-flters li', function(e) {
-        e.preventDefault();
-        portfolioFilters.forEach(function(el) {
-          el.classList.remove('filter-active');
+    /* =====================================================
+       ESC KEY CLOSES MOBILE MENU
+    ===================================================== */
+
+    document.addEventListener("keydown", e => {
+
+        if (e.key !== "Escape") return;
+
+        body.classList.remove("mobile-nav-active");
+
+        navToggle.setAttribute("aria-expanded", "false");
+
+        navToggle.classList.remove("bi-x");
+        navToggle.classList.add("bi-list");
+
+    });
+
+
+    /* =====================================================
+       SMOOTH SCROLL
+    ===================================================== */
+
+    document.querySelectorAll('a.scrollto').forEach(anchor => {
+
+        anchor.addEventListener("click", function (e) {
+
+            const target = document.querySelector(this.hash);
+
+            if (!target) return;
+
+            e.preventDefault();
+
+            target.scrollIntoView({
+
+                behavior: "smooth",
+                block: "start"
+
+            });
+
         });
-        this.classList.add('filter-active');
 
-        portfolioIsotope.arrange({
-          filter: this.getAttribute('data-filter')
+    });
+
+
+    /* =====================================================
+       ACTIVE NAVIGATION
+    ===================================================== */
+
+    const sections = document.querySelectorAll("section[id]");
+
+    function updateActiveNav() {
+
+        const scrollPosition = window.scrollY + 180;
+
+        sections.forEach(section => {
+
+            const id = section.getAttribute("id");
+
+            const link = document.querySelector(`#navbar a[href="#${id}"]`);
+
+            if (!link) return;
+
+            if (
+                scrollPosition >= section.offsetTop &&
+                scrollPosition < section.offsetTop + section.offsetHeight
+            ) {
+
+                link.classList.add("active");
+
+            } else {
+
+                link.classList.remove("active");
+
+            }
+
         });
-        portfolioIsotope.on('arrangeComplete', function() {
-          AOS.refresh()
-        });
-      }, true);
+
     }
 
-  });
+    window.addEventListener("scroll", updateActiveNav);
+    updateActiveNav();
 
-  /**
-   * Initiate portfolio lightbox 
-   */
-  const portfolioLightbox = GLightbox({
-    selector: '.portfolio-lightbox'
-  });
 
-  /**
-   * Portfolio details slider
-   */
-  new Swiper('.portfolio-details-slider', {
-    speed: 400,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
+    /* =====================================================
+       FOOTER YEAR
+    ===================================================== */
+
+    if (year) {
+
+        year.textContent = new Date().getFullYear();
+
     }
-  });
 
-  /**
-   * Testimonials slider
-   */
-  new Swiper('.testimonials-slider', {
-    speed: 600,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    slidesPerView: 'auto',
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
-    },
-    breakpoints: {
-      320: {
-        slidesPerView: 1,
-        spaceBetween: 20
-      },
+    /* =====================================================
+   SERVICES MODAL
+===================================================== */
 
-      1200: {
-        slidesPerView: 3,
-        spaceBetween: 20
-      }
+const serviceData = {
+
+    installations: {
+
+        icon: "bi-lightning-charge",
+
+        title: "Electrical Installations",
+
+        description:
+        "Whether you're building a new home, renovating your kitchen or adding extra plug points, we provide safe, compliant electrical installations completed to the highest standard.",
+
+        examples: [
+
+            "New plug points",
+
+            "Lighting installations",
+
+            "Ceiling fans",
+
+            "Outdoor lighting",
+
+            "Stove installations",
+
+            "Garage wiring"
+
+        ]
+
+    },
+
+    faultfinding: {
+
+        icon: "bi-soundwave",
+
+        title: "Fault Finding & Diagnostics",
+
+        description:
+        "Electrical faults can be frustrating and dangerous. We quickly identify the source of the problem and carry out reliable repairs.",
+
+        examples: [
+
+            "Power tripping",
+
+            "Lights flickering",
+
+            "Burning smells",
+
+            "Faulty plug points",
+
+            "Power failures"
+
+        ]
+
+    },
+
+    dbboards: {
+
+        icon: "bi-grid-3x3-gap",
+
+        title: "DB Boards & Upgrades",
+
+        description:
+        "We install, repair and upgrade distribution boards to keep your electrical system safe and compliant.",
+
+        examples: [
+
+            "DB upgrades",
+
+            "Earth leakage",
+
+            "Circuit breakers",
+
+            "Safety inspections"
+
+        ]
+
+    },
+
+    rewiring: {
+
+        icon: "bi-plug",
+
+        title: "Wiring & Rewiring",
+
+        description:
+        "Old or damaged wiring can become a safety risk. We replace and install wiring for homes and businesses.",
+
+        examples: [
+
+            "House rewiring",
+
+            "Office rewiring",
+
+            "Extension wiring",
+
+            "Cable replacement"
+
+        ]
+
+    },
+
+    maintenance: {
+
+        icon: "bi-building",
+
+        title: "Industrial & Commercial Maintenance",
+
+        description:
+        "Keeping businesses operating safely with planned electrical maintenance and repairs.",
+
+        examples: [
+
+            "Routine maintenance",
+
+            "Factory repairs",
+
+            "Retail maintenance",
+
+            "Preventative servicing"
+
+        ]
+
+    },
+
+    motorcontrol: {
+
+        icon: "bi-cpu",
+
+        title: "Motor Control & Starters",
+
+        description:
+        "Installation and maintenance of motor control systems for industrial applications.",
+
+        examples: [
+
+            "Motor starters",
+
+            "Control panels",
+
+            "Industrial motors",
+
+            "Pump systems"
+
+        ]
+
+    },
+
+    cables: {
+
+        icon: "bi-bezier2",
+
+        title: "Cable Installations & Terminations",
+
+        description:
+        "Professional cable installations completed safely for commercial and industrial environments.",
+
+        examples: [
+
+            "Cable routing",
+
+            "Cable joints",
+
+            "Terminations",
+
+            "Underground cables"
+
+        ]
+
+    },
+
+    emergency: {
+
+        icon: "bi-broadcast",
+
+        title: "Emergency Repairs",
+
+        description:
+        "Fast response for urgent electrical problems to restore power safely and minimise downtime.",
+
+        examples: [
+
+            "Power outages",
+
+            "Storm damage",
+
+            "Electrical faults",
+
+            "Emergency call-outs"
+
+        ]
+
     }
-  });
 
-  /**
-   * Animation on scroll
-   */
-  window.addEventListener('load', () => {
-    AOS.init({
-      duration: 1000,
-      easing: 'ease-in-out',
-      once: true,
-      mirror: false
-    })
-  });
+};
 
-})()
+const modal = document.getElementById("serviceModal");
+
+const modalTitle = document.getElementById("modalTitle");
+
+const modalDescription = document.getElementById("modalDescription");
+
+const modalExamples = document.getElementById("modalExamples");
+
+const modalIcon = document.getElementById("modalIcon");
+
+document.querySelectorAll(".service-item").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        const service = serviceData[button.dataset.service];
+
+        modalTitle.textContent = service.title;
+
+        modalDescription.textContent = service.description;
+
+        modalIcon.className = "bi " + service.icon;
+
+        modalExamples.innerHTML = "";
+
+        service.examples.forEach(item => {
+
+            modalExamples.innerHTML += `<li>${item}</li>`;
+
+        });
+
+        modal.classList.add("active");
+
+        document.body.style.overflow = "hidden";
+
+    });
+
+});
+
+document.querySelector(".service-modal-close").addEventListener("click", () => {
+
+    modal.classList.remove("active");
+
+    document.body.style.overflow = "";
+
+});
+
+document.querySelector(".service-modal-overlay").addEventListener("click", () => {
+
+    modal.classList.remove("active");
+
+    document.body.style.overflow = "";
+
+});
+
+
+    /* =====================================================
+       AOS
+    ===================================================== */
+
+    if (typeof AOS !== "undefined") {
+
+        AOS.init({
+
+            duration: 700,
+            once: true,
+            easing: "ease-out"
+
+        });
+
+    }
+
+});

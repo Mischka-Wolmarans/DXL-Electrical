@@ -1,0 +1,192 @@
+/*=========================================================
+  DXL Electrical
+  Design System Variables
+=========================================================*/
+
+:root{
+
+    /*=====================================
+      Brand Colours
+    =====================================*/
+
+    --clr-primary:#001027;
+    --clr-primary-dark:#000F24;
+    --clr-primary-light:#133566;
+
+    --clr-accent:#B2CA17;
+    --clr-accent-hover:#D9ED3E;
+
+    --clr-secondary:#1F86FF;
+
+    --clr-white:#FFFFFF;
+    --clr-black:#000000;
+
+    --clr-bg:#F7F7F7;
+    --clr-surface:#FFFFFF;
+
+    --clr-border:#E7E8EA;
+
+    --clr-text:#172033;
+    --clr-text-light:#657286;
+
+    --clr-success:#2FAE66;
+    --clr-warning:#F2B93B;
+    --clr-danger:#E04E4E;
+
+
+
+    /*=====================================
+      Typography
+    =====================================*/
+
+    --font-heading:"Manrope",sans-serif;
+    --font-body:"Inter",sans-serif;
+
+
+
+    /*=====================================
+      Font Sizes
+    =====================================*/
+
+    --fs-900:clamp(3.8rem,7vw,6.5rem);
+    --fs-800:clamp(2.8rem,5vw,4.5rem);
+    --fs-700:clamp(2.2rem,4vw,3.2rem);
+    --fs-600:2rem;
+    --fs-500:1.5rem;
+    --fs-400:1.125rem;
+    --fs-300:1rem;
+    --fs-200:.875rem;
+    --fs-100:.75rem;
+
+
+
+    /*=====================================
+      Font Weights
+    =====================================*/
+
+    --fw-light:300;
+    --fw-regular:400;
+    --fw-medium:500;
+    --fw-semibold:600;
+    --fw-bold:700;
+    --fw-extrabold:800;
+
+
+
+    /*=====================================
+      Line Heights
+    =====================================*/
+
+    --lh-heading:1.1;
+    --lh-body:1.7;
+
+
+
+    /*=====================================
+      Layout
+    =====================================*/
+
+    --container:1320px;
+    --container-small:1180px;
+
+    --sidebar-width:300px;
+    --header-height:90px;
+
+    --section-padding:30px;
+
+
+
+    /*=====================================
+      Spacing
+    =====================================*/
+
+    --space-xs:.5rem;
+    --space-sm:1rem;
+    --space-md:1.5rem;
+    --space-lg:2.5rem;
+    --space-xl:4rem;
+    --space-2xl:6rem;
+    --space-3xl:8rem;
+
+
+
+    /*=====================================
+      Border Radius
+    =====================================*/
+
+    --radius-xs:4px;
+    --radius-sm:8px;
+    --radius-md:14px;
+    --radius-lg:20px;
+    --radius-xl:32px;
+    --radius-pill:999px;
+
+
+
+    /*=====================================
+      Shadows
+    =====================================*/
+
+    --shadow-sm:
+        0 2px 10px rgba(0,0,0,.05);
+
+    --shadow-md:
+        0 10px 30px rgba(4,18,37,.08);
+
+    --shadow-lg:
+        0 25px 60px rgba(4,18,37,.12);
+
+
+
+    /*=====================================
+      Buttons
+    =====================================*/
+
+    --btn-height:56px;
+    --btn-padding:0 2rem;
+
+
+
+    /*=====================================
+      Cards
+    =====================================*/
+
+    --card-padding:2rem;
+
+
+
+    /*=====================================
+      Transitions
+    =====================================*/
+
+    --transition-fast:.2s ease;
+    --transition:.35s ease;
+    --transition-slow:.6s ease;
+
+
+
+    /*=====================================
+      Z Index
+    =====================================*/
+
+    --z-nav:1000;
+    --z-sidebar:1050;
+    --z-overlay:1100;
+    --z-modal:1200;
+
+
+
+    /*=====================================
+      Hero Overlay
+    =====================================*/
+
+    --hero-overlay:
+        linear-gradient(
+            90deg,
+            rgba(6,18,38,.95) 0%,
+            rgba(6,18,38,.88) 35%,
+            rgba(6,18,38,.55) 55%,
+            rgba(6,18,38,0) 100%
+        );
+
+}

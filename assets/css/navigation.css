@@ -1,0 +1,234 @@
+/*=========================================================
+  Navigation
+  Header • Sidebar • Mobile Navigation
+=========================================================*/
+
+/*=========================================================
+  Header
+=========================================================*/
+
+#header{
+    position:fixed;
+    inset:0 auto 0 0;
+
+    width:var(--sidebar-width);
+    height:100vh;
+
+    padding:0 15px;
+
+    background:var(--clr-primary);
+
+    overflow-y:auto;
+    overflow-x:hidden;
+
+    scrollbar-width:thin;
+
+    z-index:var(--z-sidebar);
+
+    transition:left .4s ease;
+}
+
+#header .d-flex{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+}
+
+#header .profile{
+    padding:16px 0 10px;
+}
+
+#header .profile img{
+    width:200px;
+    margin:0 auto;
+}
+
+/*=========================================================
+  Navigation
+=========================================================*/
+
+.navbar{
+    display:block;
+    margin-top:10px;
+}
+
+.nav-menu,
+.nav-menu ul{
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+
+.nav-menu > ul > li{
+    position:relative;
+}
+
+.nav-menu a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:14px 16px;
+    margin-bottom:8px;
+
+    color:var(--clr-text-light);
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+    font-size:.95rem;
+    font-weight:600;
+
+    transition:var(--transition);
+}
+
+.nav-menu a i{
+    width:24px;
+
+    font-size:1.25rem;
+
+    color:inherit;
+
+    transition:inherit;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active{
+    color:var(--clr-accent);
+}
+
+.nav-menu li:hover > a{
+    color:var(--clr-accent);
+}
+
+/*=========================================================
+  Social Links
+=========================================================*/
+
+.social-links{
+    margin-top:auto;
+    padding:32px 0;
+    text-align:center;
+}
+
+.social-links a{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    width:40px;
+    height:40px;
+
+    margin:0 4px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.08);
+
+    color:var(--clr-white);
+
+    transition:var(--transition);
+}
+
+.social-links a:hover{
+    background:var(--clr-accent);
+    color:var(--clr-primary);
+}
+
+/*=========================================================
+  Mobile Logo
+=========================================================*/
+
+.mobile-nav-logo{
+    position:fixed;
+
+    top:15px;
+    left:15px;
+
+    width:46px;
+    height:46px;
+
+    object-fit:contain;
+
+    z-index:calc(var(--z-sidebar) + 2);
+
+    display:none;
+}
+
+/*=========================================================
+  Mobile Toggle
+=========================================================*/
+
+.mobile-brand {
+    position: absolute;
+    top: 18px;
+    left: 20px;
+
+    display: none;
+    width: 150px;
+
+    opacity: 1;
+    pointer-events: auto;
+
+    z-index: calc(var(--z-sidebar) + 1);
+}
+
+.mobile-brand img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+body.mobile-nav-active .mobile-brand {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.mobile-nav-toggle{
+    position:fixed;
+    top:15px;
+    right:15px;
+
+    width:46px;
+    height:46px;
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    border:none;
+    border-radius:50%;
+
+    background:var(--clr-primary);
+    color:var(--clr-white);
+
+    font-size:1.5rem;
+    cursor:pointer;
+
+    z-index:calc(var(--z-sidebar) + 2);
+}
+
+.mobile-nav-toggle:hover{
+    background:var(--clr-primary-light);
+}
+
+/*=========================================================
+  Mobile Navigation
+=========================================================*/
+
+.mobile-nav-active{
+    overflow:hidden;
+}
+
+.mobile-nav-active #header{
+    left:0;
+}
+
+/*=========================================================
+  Desktop Layout
+=========================================================*/
+
+#main,
+#hero{
+    margin-left:var(--sidebar-width);
+}

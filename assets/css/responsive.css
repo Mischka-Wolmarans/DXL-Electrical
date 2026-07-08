@@ -1,0 +1,454 @@
+/*=========================================================
+  RESPONSIVE STYLES
+=========================================================*/
+
+/*=========================================================
+  TRUST STRIP 
+=========================================================*/
+
+@media (min-width:768px){
+
+    .trust-strip{
+        grid-template-columns:repeat(4,1fr);
+        padding:16px;
+    }
+
+    .trust-item{
+        padding:0px;
+        margin:0px;
+        border-bottom:none;
+        border-right:1px solid var(--clr-border);
+    }
+
+    .trust-item:last-child{
+        border-right:none;
+    }
+
+}
+
+
+/*=========================================================
+  LARGE DESKTOP
+=========================================================*/
+
+@media (max-width:1400px){
+
+    #hero{
+        padding:70px;
+    }
+
+}
+
+
+/*=========================================================
+  LAPTOP
+=========================================================*/
+
+@media (max-width:1200px){
+
+    /*-------------------------
+      Layout
+    -------------------------*/
+
+    #header{
+        left:-300px;
+    }
+
+    #main{
+        margin-left:0;
+    }
+
+    #hero{
+        margin-left:0;
+        padding:70px 60px;
+    }
+
+    /*-------------------------
+      Mobile Navigation
+    -------------------------*/
+
+    .mobile-nav-toggle{
+        display:flex;
+    }
+
+    .mobile-brand,
+    .mobile-nav-toggle{
+    display:flex;
+    }
+
+    .mobile-nav-active #header{
+        left:0;
+    }
+
+}
+
+
+/*=========================================================
+  TABLET
+=========================================================*/
+
+@media (max-width:992px){
+
+    /*-------------------------
+      Hero
+    -------------------------*/
+
+    #hero{
+
+        padding:60px 40px;
+
+    }
+
+    .hero-content{
+
+        max-width:100%;
+
+    }
+
+    .hero h1,
+    #hero h1{
+
+        font-size:clamp(3rem,7vw,4.2rem);
+
+    }
+
+    #hero p{
+
+        max-width:100%;
+
+    }
+
+    /*-------------------------
+      Facts
+    -------------------------*/
+
+    .facts .count-box{
+
+        text-align:center;
+
+    }
+
+    .facts .count-box i{
+
+        float:none;
+
+        display:block;
+
+        margin-bottom:15px;
+
+    }
+
+    .facts .count-box p{
+
+        margin:0;
+
+    }
+
+    /*-------------------------
+      Services
+    -------------------------*/
+
+    .services-grid{
+
+        grid-template-columns:1fr;
+
+        gap:0;
+
+    }
+
+    .services-grid::after{
+
+        display:none;
+
+    }
+
+    /*-------------------------
+      About
+    -------------------------*/
+
+    .about .row{
+
+        row-gap:40px;
+
+    }
+
+    .about img{
+
+        margin:0 auto;
+
+        display:block;
+
+    }
+
+    /*-------------------------
+      CTA
+    -------------------------*/
+
+    .cta-wrapper{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+}
+
+
+/*=========================================================
+  MOBILE
+=========================================================*/
+
+@media (max-width:768px){
+
+    /*-------------------------
+      General
+    -------------------------*/
+
+    #hero{
+    padding:40px 16px 16px 16px;
+    }
+
+    /*-------------------------
+      Hero
+    -------------------------*/
+
+    #hero{
+
+        min-height:100vh;
+
+        padding:40px 16px 16px 16px;
+
+        background-image:url("../img/hero-bg-mobile.webp");
+
+        background-position:center;
+
+        background-repeat:no-repeat;
+
+        background-size:cover;
+
+    }
+
+    .hero-overlay{
+
+        background:
+        linear-gradient(
+            180deg,
+            rgba(6,18,38,.92),
+            rgba(6,18,38,.70)
+        );
+
+    }
+
+    .hero-subtitle{
+
+        font-size:.8rem;
+
+    }
+
+    .hero h1,
+    #hero h1{
+
+        font-size:clamp(2.8rem,10vw,3.8rem);
+
+    }
+
+    #hero p{
+
+        font-size:1rem;
+
+    }
+
+    .hero-buttons{
+
+        flex-direction:column;
+
+        gap:16px;
+
+    }
+
+    .hero-buttons a{
+
+        width:100%;
+
+    }
+
+    /*-------------------------
+      Sidebar
+    -------------------------*/
+
+    .sidebar-actions{
+
+        margin-top:20px;
+
+    }
+
+    /*-------------------------
+      Services
+    -------------------------*/
+
+    .service-item{
+
+        gap:16px;
+
+        padding:20px 0;
+
+    }
+
+    .service-item span{
+
+        font-size:1rem;
+
+    }
+
+
+    /*-------------------------
+      Portfolio
+    -------------------------*/
+
+    #portfolio-flters{
+
+        justify-content:flex-start;
+
+        flex-wrap:nowrap;
+
+        overflow-x:auto;
+
+        white-space:nowrap;
+
+        scrollbar-width:none;
+
+    }
+
+    #portfolio-flters::-webkit-scrollbar{
+
+        display:none;
+
+    }
+
+    .portfolio-links a{
+
+        width:56px;
+
+        height:56px;
+
+    }
+
+    /*-------------------------
+      CTA
+    -------------------------*/
+
+    .cta{
+
+        padding:60px 24px;
+
+    }
+
+    .cta-buttons{
+
+        width:100%;
+
+        flex-direction:column;
+
+    }
+
+    .cta-btn{
+
+        width:100%;
+
+    }
+
+    /*-------------------------
+      Footer
+    -------------------------*/
+
+    .footer-bottom{
+
+        text-align:center;
+
+    }
+
+}
+
+
+/*=========================================================
+  SMALL MOBILE
+=========================================================*/
+
+@media (max-width:576px){
+
+    /*-------------------------
+      Hero
+    -------------------------*/
+
+    #hero{
+
+        padding:40px 16px 16px 16px;
+    }
+
+    .hero h1,
+    #hero h1{
+
+        font-size:2.5rem;
+
+    }
+
+    #hero p{
+
+        font-size:.95rem;
+
+    }
+
+    /*-------------------------
+      Section Titles
+    -------------------------*/
+
+    .section-title{
+
+        margin-bottom:16px;
+
+    }
+
+    .section-title h2{
+
+        font-size:2rem;
+
+    }
+
+    /*-------------------------
+      About
+    -------------------------*/
+
+    .about-p{
+
+        font-size:1rem;
+
+    }
+
+    .about .content ul span{
+
+        font-size:1rem;
+
+    }
+
+    /*-------------------------
+      Testimonials
+    -------------------------*/
+
+    .testimonial-item{
+
+        padding:30px 24px;
+
+    }
+
+    /*-------------------------
+      CTA
+    -------------------------*/
+
+    .cta-content h2{
+
+        font-size:2rem;
+
+    }
+
+}

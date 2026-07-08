@@ -1,0 +1,191 @@
+/*=========================================================
+Layout
+Main Layout • Hero • Global Sections
+=========================================================*/
+
+/*=========================================================
+Main Content
+=========================================================*/
+
+#main{
+    margin-left:var(--sidebar-width);
+}
+
+/*=========================================================
+Sections
+=========================================================*/
+
+section{
+    position:relative;
+
+    padding:var(--section-padding) 0;
+
+    overflow:hidden;
+
+    border-bottom:1px solid var(--clr-border);
+
+    background:var(--clr-surface);
+}
+
+.section-bg{
+    background:var(--clr-white);
+}
+
+/*=========================================================
+Hero
+=========================================================*/
+
+#hero{
+
+    position:relative;
+
+    display:flex;
+    align-items:center;
+
+    min-height:100vh;
+
+    margin-left:0px!important;
+
+    padding:var(--section-padding);
+
+    overflow:hidden;
+
+    background-image:url("../img/hero-bg.webp");
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:cover;
+
+}
+
+.hero-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:var(--hero-overlay);
+
+}
+
+.hero-content{
+
+    position:relative;
+
+    z-index:2;
+
+    max-width:720px;
+
+    margin-left:0px;
+
+}
+
+.hero-subtitle{
+
+    display:block;
+
+    margin-bottom:24px;
+
+    color:var(--clr-accent);
+
+    font-size:.9rem;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+
+}
+
+#hero h1{
+
+    margin-bottom:16px;
+
+    font-size:var(--fs-800);
+
+    line-height:auto;
+
+    color:var(--clr-white);
+
+}
+
+#hero h1 span{
+
+    color:var(--clr-accent);
+
+}
+
+#hero p{
+
+    max-width:600px;
+
+    margin-bottom:16px;
+
+    color:var(--clr-white);
+
+    font-size:1.2rem;
+
+}
+
+.hero-buttons{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:20px;
+
+}
+
+
+/*=========================================================
+Back To Top
+=========================================================*/
+
+.back-to-top{
+
+    position:fixed;
+
+    right:20px;
+    bottom:20px;
+
+    width:46px;
+    height:46px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:var(--clr-primary);
+
+    color:var(--clr-white);
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:var(--transition);
+
+    z-index:var(--z-overlay);
+
+}
+
+.back-to-top.active{
+
+    opacity:1;
+    visibility:visible;
+
+}
+
+.back-to-top:hover{
+
+    background:var(--clr-primary-light);
+
+}
+
+.back-to-top i{
+
+    font-size:1.6rem;
+
+}
