@@ -452,14 +452,17 @@ document.querySelector(".service-modal-overlay").addEventListener("click", () =>
     }
 
     /* =====================================================
-        CURSOR SPARK TRAIL
+   CURSOR SPARK TRAIL
     ===================================================== */
 
     const sparkCanvas = document.getElementById("sparkTrail");
 
-    if (sparkCanvas && window.matchMedia("(hover: hover)").matches) {
+    if (sparkCanvas) {
         const ctx = sparkCanvas.getContext("2d");
         const points = [];
+        const sparks = [];
+
+        const isTouch = window.matchMedia("(pointer: coarse)").matches;
 
         function resizeSparkCanvas() {
             sparkCanvas.width = window.innerWidth * window.devicePixelRatio;
@@ -472,17 +475,51 @@ document.querySelector(".service-modal-overlay").addEventListener("click", () =>
                 x,
                 y,
                 age: 0,
-                life: 18
+                life: isTouch ? 8 : 18
             });
 
-            if (points.length > 24) {
+            if (points.length > (isTouch ? 14 : 24)) {
                 points.shift();
+            }
+
+            if (Math.random() > 0.65) {
+                createSparks(x, y);
+            }
+        }
+
+        function createSparks(x, y) {
+            const sparkCount = isTouch ? 2 : 4;
+
+            for (let i = 0; i < sparkCount; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 2 + 1;
+
+                sparks.push({
+                    x,
+                    y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    age: 0,
+                    life: Math.random() * 12 + 8,
+                    size: Math.random() * 2 + 1
+                });
             }
         }
 
         window.addEventListener("mousemove", e => {
             addSparkPoint(e.clientX, e.clientY);
         });
+
+        window.addEventListener(
+            "touchmove",
+            e => {
+                const touch = e.touches[0];
+                if (!touch) return;
+
+                addSparkPoint(touch.clientX, touch.clientY);
+            },
+            { passive: true }
+        );
 
         function drawSparkTrail() {
             ctx.clearRect(0, 0, sparkCanvas.width, sparkCanvas.height);
@@ -498,8 +535,11 @@ document.querySelector(".service-modal-overlay").addEventListener("click", () =>
                 gradient.addColorStop(0.35, `rgba(182, 219, 0, ${opacity * 0.55})`);
                 gradient.addColorStop(1, `rgba(0, 160, 255, ${opacity * 0.2})`);
 
+                const lineWidth = isTouch ? 4 : 7;
+                const glowWidth = isTouch ? 1.2 : 2;
+
                 ctx.strokeStyle = gradient;
-                ctx.lineWidth = 7 * opacity;
+                ctx.lineWidth = lineWidth * opacity;
                 ctx.lineCap = "round";
                 ctx.lineJoin = "round";
 
@@ -509,7 +549,7 @@ document.querySelector(".service-modal-overlay").addEventListener("click", () =>
                 ctx.stroke();
 
                 ctx.strokeStyle = `rgba(255,255,255,${opacity * 0.45})`;
-                ctx.lineWidth = 2 * opacity;
+                ctx.lineWidth = glowWidth * opacity;
 
                 ctx.beginPath();
                 ctx.moveTo(p1.x, p1.y);
@@ -517,6 +557,31 @@ document.querySelector(".service-modal-overlay").addEventListener("click", () =>
                 ctx.stroke();
 
                 p2.age++;
+            }
+
+            for (let i = sparks.length - 1; i >= 0; i--) {
+                const spark = sparks[i];
+                const opacity = Math.max(0, 1 - spark.age / spark.life);
+
+                spark.x += spark.vx;
+                spark.y += spark.vy;
+                spark.vx *= 0.94;
+                spark.vy *= 0.94;
+                spark.age++;
+
+                ctx.beginPath();
+                ctx.arc(spark.x, spark.y, spark.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(182, 219, 0, ${opacity})`;
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(spark.x, spark.y, spark.size * 0.45, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+                ctx.fill();
+
+                if (spark.age >= spark.life) {
+                    sparks.splice(i, 1);
+                }
             }
 
             while (points.length && points[0].age >= points[0].life) {
@@ -530,7 +595,6 @@ document.querySelector(".service-modal-overlay").addEventListener("click", () =>
         window.addEventListener("resize", resizeSparkCanvas);
         drawSparkTrail();
     }
-
 
 
 });

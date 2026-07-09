@@ -26,19 +26,6 @@
 
 }
 
-/*=========================================================
-  ABOUT 
-=========================================================*/
-
-@media (hover:none){
-
-    .about-image-tag{
-
-        display:none;
-
-    }
-
-}
 
 /*=========================================================
   CTA STRIP 
@@ -348,18 +335,21 @@
       Services
     -------------------------*/
 
-    .service-item{
-
-        gap:16px;
-
-        padding:20px 0;
-
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
     }
 
-    .service-item span{
+    .services-grid::after {
+        display: none;
+    }
 
-        font-size:1rem;
+    .service-column:first-child .service-item:last-child {
+        border-bottom: 1px solid var(--clr-border);
+    }
 
+    .service-column:last-child .service-item:last-child {
+        border-bottom: none;
     }
 
     .service-modal-content ul {
@@ -374,6 +364,30 @@
         line-height: 1.35;
     }
 
+    .modal-buttons {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    }
+
+    .modal-buttons a {
+        width: 100%;
+    }
+
+    /*-------------------------
+    About
+    -------------------------*/
+
+    .about-image-tag {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+    padding: 14px 16px;
+}
 
     /*-------------------------
     Portfolio Filters
@@ -482,6 +496,11 @@
         margin-bottom:16px;
 
     }
+
+    .section-title p {
+    max-width: 100%;
+    width: 100%;
+}
 
     .section-title h2{
 

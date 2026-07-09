@@ -202,9 +202,3 @@ Cursor Trail
     pointer-events: none;
     z-index: 9998;
 }
-
-@media (hover: none), (pointer: coarse) {
-    #sparkTrail {
-        display: none;
-    }
-}
