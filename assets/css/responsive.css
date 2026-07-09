@@ -26,6 +26,67 @@
 
 }
 
+/*=========================================================
+  ABOUT 
+=========================================================*/
+
+@media (hover:none){
+
+    .about-image-tag{
+
+        display:none;
+
+    }
+
+}
+
+/*=========================================================
+  CTA STRIP 
+=========================================================*/
+
+@media (min-width: 992px) {
+    .cta-strip {
+        padding: var(--space-md);
+    }
+
+    .cta-strip-content {
+        grid-template-columns: 1fr auto;
+    }
+
+    .cta-strip-actions {
+        display: flex;
+        align-items: center;
+    }
+
+    .cta-strip-btn {
+        min-width: 180px;
+    }
+}
+
+/*=========================================================
+  TESTIMONIALS 
+=========================================================*/
+
+@media (max-width: 576px) {
+    .testimonial-item {
+        padding: 16px;
+        border-radius: 18px;
+    }
+
+    .testimonial-quote-mark {
+        font-size: 3.8rem;
+    }
+
+    .testimonial-item blockquote {
+        font-size: 1rem;
+        line-height: 1.65;
+    }
+
+    .testimonial-author {
+        flex-direction: column;
+        text-align: center;
+    }
+}
 
 /*=========================================================
   LARGE DESKTOP
@@ -301,37 +362,50 @@
 
     }
 
+    .service-modal-content ul {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px 16px;
+    }
+
+    .service-modal-content li {
+        margin-bottom: 0;
+        font-size: 0.82rem;
+        line-height: 1.35;
+    }
+
 
     /*-------------------------
-      Portfolio
+    Portfolio Filters
     -------------------------*/
 
-    #portfolio-flters{
+    #portfolio-flters {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
 
-        justify-content:flex-start;
+        width: 100%;
+        margin: var(--space-md);
+        padding: 0;
 
-        flex-wrap:nowrap;
-
-        overflow-x:auto;
-
-        white-space:nowrap;
-
-        scrollbar-width:none;
-
+        background: transparent;
+        border: none;
     }
 
-    #portfolio-flters::-webkit-scrollbar{
+    #portfolio-flters li {
+        flex: 1 1 calc(50% - 10px);
+        max-width: 170px;
+        min-width: 130px;
 
-        display:none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-    }
+        padding: 12px 18px;
 
-    .portfolio-links a{
-
-        width:56px;
-
-        height:56px;
-
+        white-space: nowrap;
+        font-size: 0.75rem;
     }
 
     /*-------------------------

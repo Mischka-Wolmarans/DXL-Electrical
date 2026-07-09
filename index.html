@@ -186,6 +186,13 @@
 </head>
 
 <body>
+
+    <!-- =====================================================
+         CURSOR TRAIL
+    ====================================================== -->
+
+    <canvas id="sparkTrail" aria-hidden="true"></canvas>
+
     <!-- =====================================================
          MOBILE HEADER
     ====================================================== -->
@@ -581,10 +588,24 @@
             <div class="col-lg-5"
                  data-aos="fade-right">
 
-                <img
-                    src="assets/img/profile-img.jpeg"
-                    class="img-fluid about-image"
-                    alt="Professional electrician from DXL Electrical serving the Garden Route">
+                <div class="about-image">
+
+                    <img
+                        src="assets/img/hennico-viljoen.webp"
+                        alt="Hennico Viljoen - Owner of DXL Electrical">
+
+                    <div class="about-image-tag">
+
+                        <h4>
+                        <i class="bi bi-lightning-charge-fill"></i>
+                        Hennico Viljoen
+                        </h4>
+
+                        <span>Owner &amp; Master Electrician</span>
+
+                    </div>
+
+                </div>
 
             </div>
 
@@ -766,7 +787,7 @@
 
             <!-- Portfolio Item -->
 
-            <div class="col-lg-4 col-md-6 portfolio-item filter-industrial">
+            <div class="col-lg-4 col-md-6 portfolio-item filter-commercial">
 
                 <div class="portfolio-wrap">
 
@@ -797,7 +818,7 @@
 
             <!-- Portfolio Item -->
 
-            <div class="col-lg-4 col-md-6 portfolio-item filter-commercial">
+            <div class="col-lg-4 col-md-6 portfolio-item filter-residential">
 
                 <div class="portfolio-wrap">
 
@@ -898,63 +919,31 @@
      CTA SECTION START
 ====================================================== -->
 
-<section id="cta"
-         class="cta"
-         aria-labelledby="cta-title">
-
-    <div class="container">
-
-        <div class="cta-wrapper">
-
-            <div class="cta-content">
-
-                <h2 id="cta-title">
-
-                    Need an Electrician?
-
-                </h2>
-
-                <p>
-
-                    Need a trusted electrician in the Garden Route?
-                    Contact DXL Electrical today for reliable residential,
-                    commercial and industrial electrical services.
-
-                </p>
-
+    <section class="cta-strip" aria-label="Contact DXL Electrical" id="cta-strip">
+        <div class="cta-strip-content">
+            <div>
+                <h2>Need an electrician?</h2>
+                <p>Let's get the job done right.</p>
             </div>
 
-            <div class="cta-buttons">
-
-                <a href="tel:+27718632106"
-                   class="cta-btn cta-call"
-                   aria-label="Call DXL Electrical">
-
+            <div class="cta-strip-actions">
+                <a href="tel:0718632106" class="cta-strip-btn cta-strip-btn-primary">
                     <i class="bi bi-telephone-fill"></i>
-
-                    <span>071 863 2106</span>
-
+                    071 863 2106
                 </a>
 
-                <a href="https://wa.me/27718632106"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="cta-btn cta-whatsapp"
-                   aria-label="Chat with DXL Electrical on WhatsApp">
-
+                <a href="https://wa.me/27718632106" class="cta-strip-btn cta-strip-btn-outline">
                     <i class="bi bi-whatsapp"></i>
-
-                    <span>Chat on WhatsApp</span>
-
+                    Chat on WhatsApp
                 </a>
 
+                <a href="mailto:info@dxlelectrical.co.za" class="cta-strip-btn cta-strip-btn-outline">
+                    <i class="bi bi-envelope"></i>
+                    Email Us
+                </a>
             </div>
-
         </div>
-
-    </div>
-
-</section>
+    </section>
 
 <!-- =====================================================
      CTA SECTION END
@@ -963,7 +952,7 @@
 <!-- =====================================================
      TESTIMONIALS SECTION START
      (UNCOMMENT WHEN CLIENT HAS REVIEWS)
-======================================================
+======================================================-->
 
 <section id="testimonials" class="testimonials section-bg" aria-labelledby="testimonials-title">
 
@@ -995,37 +984,27 @@
                 <div class="swiper-slide">
 
                     <div class="testimonial-item">
+                        <div class="testimonial-quote-mark">“</div>
 
-                        <p>
+                        <blockquote>
+                            Hennico is always willing and always available, no matter how small or how big the job. Excellent work done.
+                        </blockquote>
 
-                            <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                        <div class="testimonial-author">
+                            <img src="assets/img/testimonials/marie-pienaar.jpg" alt="Marié Pienaar">
 
-                            Placeholder review.
-                            This is where a customer testimonial about the quality of work,
-                            professionalism and reliability will appear once client reviews
-                            become available.
-
-                            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-
-                        </p>
-
-                        <img
-                            src="assets/img/testimonials/testimonial-placeholder.jpg"
-                            class="testimonial-img"
-                            loading="lazy"
-                            alt="Client profile photo">
-
-                        <h3>Customer Name</h3>
-
-                        <h4>Residential Client</h4>
-
+                            <div>
+                                <h3>Marié Pienaar</h3>
+                                <span>Residential Client</span>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
 
                 
 
-                <div class="swiper-slide">
+                <!--<div class="swiper-slide">
 
                     <div class="testimonial-item">
 
@@ -1087,7 +1066,7 @@
 
                 </div>
 
-            </div>
+            </div>-->
 
             <div class="swiper-pagination"></div>
 
@@ -1097,7 +1076,7 @@
 
 </section>
 
-======================================================
+<!--======================================================
      TESTIMONIALS SECTION END
 ====================================================== -->
 
@@ -1129,7 +1108,7 @@
 
             Website designed &amp; developed by
 
-            <a href="https://www.onuitgesprokestories.co.za"
+            <a href="https://www.facebook.com/profile.php?id=61578700790031"
             target="_blank"
             rel="noopener noreferrer">
 

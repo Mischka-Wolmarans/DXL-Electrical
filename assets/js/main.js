@@ -407,6 +407,33 @@ document.querySelector(".service-modal-overlay").addEventListener("click", () =>
 
 });
 
+    /* =====================================================
+    PROJECT FILTERS
+    ===================================================== */
+
+    const portfolioFilters = document.querySelectorAll("#portfolio-flters li");
+    const portfolioItems = document.querySelectorAll(".portfolio-item");
+
+    portfolioFilters.forEach(filter => {
+        filter.addEventListener("click", () => {
+            const selectedFilter = filter.getAttribute("data-filter");
+
+            portfolioFilters.forEach(item => {
+                item.classList.remove("filter-active");
+            });
+
+            filter.classList.add("filter-active");
+
+            portfolioItems.forEach(item => {
+                const shouldShow =
+                    selectedFilter === "*" ||
+                    item.matches(selectedFilter);
+
+                item.classList.toggle("is-hidden", !shouldShow);
+            });
+        });
+    });
+
 
     /* =====================================================
        AOS
@@ -423,5 +450,87 @@ document.querySelector(".service-modal-overlay").addEventListener("click", () =>
         });
 
     }
+
+    /* =====================================================
+        CURSOR SPARK TRAIL
+    ===================================================== */
+
+    const sparkCanvas = document.getElementById("sparkTrail");
+
+    if (sparkCanvas && window.matchMedia("(hover: hover)").matches) {
+        const ctx = sparkCanvas.getContext("2d");
+        const points = [];
+
+        function resizeSparkCanvas() {
+            sparkCanvas.width = window.innerWidth * window.devicePixelRatio;
+            sparkCanvas.height = window.innerHeight * window.devicePixelRatio;
+            ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
+        }
+
+        function addSparkPoint(x, y) {
+            points.push({
+                x,
+                y,
+                age: 0,
+                life: 18
+            });
+
+            if (points.length > 24) {
+                points.shift();
+            }
+        }
+
+        window.addEventListener("mousemove", e => {
+            addSparkPoint(e.clientX, e.clientY);
+        });
+
+        function drawSparkTrail() {
+            ctx.clearRect(0, 0, sparkCanvas.width, sparkCanvas.height);
+
+            for (let i = 1; i < points.length; i++) {
+                const p1 = points[i - 1];
+                const p2 = points[i];
+
+                const opacity = Math.max(0, 1 - p2.age / p2.life);
+
+                const gradient = ctx.createLinearGradient(p1.x, p1.y, p2.x, p2.y);
+                gradient.addColorStop(0, `rgba(255, 255, 255, ${opacity * 0.05})`);
+                gradient.addColorStop(0.35, `rgba(182, 219, 0, ${opacity * 0.55})`);
+                gradient.addColorStop(1, `rgba(0, 160, 255, ${opacity * 0.2})`);
+
+                ctx.strokeStyle = gradient;
+                ctx.lineWidth = 7 * opacity;
+                ctx.lineCap = "round";
+                ctx.lineJoin = "round";
+
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+
+                ctx.strokeStyle = `rgba(255,255,255,${opacity * 0.45})`;
+                ctx.lineWidth = 2 * opacity;
+
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+
+                p2.age++;
+            }
+
+            while (points.length && points[0].age >= points[0].life) {
+                points.shift();
+            }
+
+            requestAnimationFrame(drawSparkTrail);
+        }
+
+        resizeSparkCanvas();
+        window.addEventListener("resize", resizeSparkCanvas);
+        drawSparkTrail();
+    }
+
+
 
 });
