@@ -452,7 +452,7 @@ document.querySelector(".service-modal-overlay").addEventListener("click", () =>
     }
 
     /* =====================================================
-   CURSOR SPARK TRAIL
+    CURSOR SPARK TRAIL
     ===================================================== */
 
     const sparkCanvas = document.getElementById("sparkTrail");
@@ -464,50 +464,86 @@ document.querySelector(".service-modal-overlay").addEventListener("click", () =>
 
         const isTouch = window.matchMedia("(pointer: coarse)").matches;
 
+        let lastTouchPoint = null;
+        let lastPointer = null;
+        let isEnergised = false;
+
+        const interactiveSelector =
+            "a, button, .service-item, .portfolio-item, .cta-strip-btn, .btn-primary, .btn-outline";
+
         function resizeSparkCanvas() {
             sparkCanvas.width = window.innerWidth * window.devicePixelRatio;
             sparkCanvas.height = window.innerHeight * window.devicePixelRatio;
-            ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
+
+            ctx.setTransform(
+                window.devicePixelRatio,
+                0,
+                0,
+                window.devicePixelRatio,
+                0,
+                0
+            );
         }
 
-        function addSparkPoint(x, y) {
-            points.push({
-                x,
-                y,
-                age: 0,
-                life: isTouch ? 8 : 18
-            });
-
-            if (points.length > (isTouch ? 14 : 24)) {
-                points.shift();
-            }
-
-            if (Math.random() > 0.65) {
-                createSparks(x, y);
-            }
-        }
-
-        function createSparks(x, y) {
-            const sparkCount = isTouch ? 2 : 4;
+        function createSparks(x, y, speed = 1, boost = false) {
+            const sparkCount = boost ? 7 : isTouch ? 2 : 4;
 
             for (let i = 0; i < sparkCount; i++) {
                 const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 2 + 1;
+                const velocity = (Math.random() * 2 + 1) * speed;
 
                 sparks.push({
                     x,
                     y,
-                    vx: Math.cos(angle) * speed,
-                    vy: Math.sin(angle) * speed,
+                    vx: Math.cos(angle) * velocity,
+                    vy: Math.sin(angle) * velocity,
                     age: 0,
-                    life: Math.random() * 12 + 8,
+                    life: Math.random() * 10 + 8,
                     size: Math.random() * 2 + 1
                 });
             }
         }
 
+        function addSparkPoint(x, y, target = null) {
+            const hoveringInteractive =
+                target && target.closest && target.closest(interactiveSelector);
+
+            let speed = 0;
+
+            if (lastPointer) {
+                const dx = x - lastPointer.x;
+                const dy = y - lastPointer.y;
+                speed = Math.sqrt(dx * dx + dy * dy);
+            }
+
+            isEnergised = speed > 7 || hoveringInteractive;
+
+            points.push({
+                x,
+                y,
+                age: 0,
+                life: isTouch ? 10 : isEnergised ? 20 : 10,
+                energy: isEnergised ? 1 : 0.35
+            });
+
+            if (points.length > (isTouch ? 16 : 26)) {
+                points.shift();
+            }
+
+            if (speed > 9 || hoveringInteractive) {
+                createSparks(
+                    x,
+                    y,
+                    Math.min(Math.max(speed / 10, 1), 2.4),
+                    hoveringInteractive
+                );
+            }
+
+            lastPointer = { x, y };
+        }
+
         window.addEventListener("mousemove", e => {
-            addSparkPoint(e.clientX, e.clientY);
+            addSparkPoint(e.clientX, e.clientY, e.target);
         });
 
         window.addEventListener(
@@ -516,10 +552,31 @@ document.querySelector(".service-modal-overlay").addEventListener("click", () =>
                 const touch = e.touches[0];
                 if (!touch) return;
 
-                addSparkPoint(touch.clientX, touch.clientY);
+                lastTouchPoint = {
+                    x: touch.clientX,
+                    y: touch.clientY
+                };
+
+                addSparkPoint(touch.clientX, touch.clientY, e.target);
             },
             { passive: true }
         );
+
+        window.addEventListener(
+            "scroll",
+            () => {
+                if (!isTouch || !lastTouchPoint) return;
+
+                addSparkPoint(lastTouchPoint.x, lastTouchPoint.y);
+            },
+            { passive: true }
+        );
+
+        window.addEventListener("touchend", () => {
+            lastTouchPoint = null;
+            lastPointer = null;
+            isEnergised = false;
+        });
 
         function drawSparkTrail() {
             ctx.clearRect(0, 0, sparkCanvas.width, sparkCanvas.height);
@@ -529,17 +586,19 @@ document.querySelector(".service-modal-overlay").addEventListener("click", () =>
                 const p2 = points[i];
 
                 const opacity = Math.max(0, 1 - p2.age / p2.life);
+                const energy = p2.energy;
 
                 const gradient = ctx.createLinearGradient(p1.x, p1.y, p2.x, p2.y);
-                gradient.addColorStop(0, `rgba(255, 255, 255, ${opacity * 0.05})`);
-                gradient.addColorStop(0.35, `rgba(182, 219, 0, ${opacity * 0.55})`);
-                gradient.addColorStop(1, `rgba(0, 160, 255, ${opacity * 0.2})`);
 
-                const lineWidth = isTouch ? 4 : 7;
-                const glowWidth = isTouch ? 1.2 : 2;
+                gradient.addColorStop(0, `rgba(255,255,255,${opacity * 0.05 * energy})`);
+                gradient.addColorStop(0.35, `rgba(182,219,0,${opacity * 0.6 * energy})`);
+                gradient.addColorStop(1, `rgba(0,160,255,${opacity * 0.28 * energy})`);
+
+                const lineWidth = isTouch ? 4 : isEnergised ? 8 : 3;
+                const glowWidth = isTouch ? 1.2 : isEnergised ? 2.4 : 1;
 
                 ctx.strokeStyle = gradient;
-                ctx.lineWidth = lineWidth * opacity;
+                ctx.lineWidth = lineWidth * opacity * energy;
                 ctx.lineCap = "round";
                 ctx.lineJoin = "round";
 
@@ -548,7 +607,7 @@ document.querySelector(".service-modal-overlay").addEventListener("click", () =>
                 ctx.lineTo(p2.x, p2.y);
                 ctx.stroke();
 
-                ctx.strokeStyle = `rgba(255,255,255,${opacity * 0.45})`;
+                ctx.strokeStyle = `rgba(255,255,255,${opacity * 0.42 * energy})`;
                 ctx.lineWidth = glowWidth * opacity;
 
                 ctx.beginPath();
@@ -559,33 +618,33 @@ document.querySelector(".service-modal-overlay").addEventListener("click", () =>
                 p2.age++;
             }
 
+            while (points.length && points[0].age >= points[0].life) {
+                points.shift();
+            }
+
             for (let i = sparks.length - 1; i >= 0; i--) {
                 const spark = sparks[i];
                 const opacity = Math.max(0, 1 - spark.age / spark.life);
 
                 spark.x += spark.vx;
                 spark.y += spark.vy;
-                spark.vx *= 0.94;
-                spark.vy *= 0.94;
+                spark.vx *= 0.93;
+                spark.vy *= 0.93;
                 spark.age++;
 
                 ctx.beginPath();
                 ctx.arc(spark.x, spark.y, spark.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(182, 219, 0, ${opacity})`;
+                ctx.fillStyle = `rgba(182,219,0,${opacity})`;
                 ctx.fill();
 
                 ctx.beginPath();
                 ctx.arc(spark.x, spark.y, spark.size * 0.45, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+                ctx.fillStyle = `rgba(255,255,255,${opacity})`;
                 ctx.fill();
 
                 if (spark.age >= spark.life) {
                     sparks.splice(i, 1);
                 }
-            }
-
-            while (points.length && points[0].age >= points[0].life) {
-                points.shift();
             }
 
             requestAnimationFrame(drawSparkTrail);
