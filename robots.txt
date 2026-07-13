@@ -1,0 +1,5 @@
+User-agent: *
+
+Allow: /
+
+Sitemap: https://dxlelectrical.co.za/sitemap.xml

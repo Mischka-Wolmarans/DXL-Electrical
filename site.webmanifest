@@ -1,0 +1,21 @@
+{
+    "name": "DXL Electrical",
+    "short_name": "DXL",
+    "description": "Professional electrical contractor serving the Garden Route.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#071A33",
+    "theme_color": "#071A33",
+    "icons": [
+        {
+            "src": "/assets/img/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/assets/img/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
