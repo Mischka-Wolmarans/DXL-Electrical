@@ -545,3 +545,55 @@
     }
 
 }
+/*=========================================================
+  MOBILE UX ALIGNMENT & TOUCH TARGETS
+  Keeps desktop/tablet layouts unchanged.
+=========================================================*/
+
+@media (max-width: 768px) {
+
+    /* Center section eyebrow, title and supporting copy on mobile. */
+    .section-title {
+        width: 100%;
+        text-align: center;
+    }
+
+    .section-title span,
+    .section-title h2,
+    .section-title p,
+    .section-title .section-description {
+        text-align: center;
+    }
+
+    .section-title p,
+    .section-title .section-description {
+        width: 100%;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Make primary mobile actions easy to acquire and tap. */
+    #main .btn-primary,
+    #main .btn-outline,
+    #main .cta-btn,
+    #main .cta-strip-btn {
+        width: 100%;
+        max-width: none;
+    }
+
+    .hero-buttons,
+    .modal-buttons,
+    .cta-buttons,
+    .cta-strip-actions {
+        width: 100%;
+    }
+}
+
+/* Galaxy A54-sized and narrower phones: keep the hero location note
+   comfortably clear of the fixed mobile logo. */
+@media (max-width: 480px) {
+    .hero-subtitle {
+        margin-top: 48px;
+    }
+}
